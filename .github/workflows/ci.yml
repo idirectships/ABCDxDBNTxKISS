@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate required files
+        run: |
+          echo "Checking required files exist..."
+          test -f README.md && echo "README.md: OK" || (echo "MISSING README.md" && exit 1)
+          test -f LICENSE && echo "LICENSE: OK" || (echo "MISSING LICENSE" && exit 1)
+          test -f skills/abcd-dbnt-kiss/SKILL.md && echo "skills/abcd-dbnt-kiss/SKILL.md: OK" || (echo "MISSING SKILL.md" && exit 1)
+          echo "All file checks passed."
+      - name: Validate SKILL.md frontmatter
+        run: |
+          echo "Checking SKILL.md frontmatter fields..."
+          grep -q "^name:" skills/abcd-dbnt-kiss/SKILL.md && echo "name: OK" || (echo "MISSING name field" && exit 1)
+          grep -q "^description:" skills/abcd-dbnt-kiss/SKILL.md && echo "description: OK" || (echo "MISSING description field" && exit 1)
+          grep -q "^allowed-tools:" skills/abcd-dbnt-kiss/SKILL.md && echo "allowed-tools: OK" || (echo "MISSING allowed-tools field" && exit 1)
+          echo "Frontmatter checks passed."
+      - name: No secrets sanity check
+        run: |
+          echo "Checking for obvious secret patterns..."
+          if grep -rE "(ntn_[A-Za-z0-9]{40,}|sk-[A-Za-z0-9]{48,}|AKIA[A-Z0-9]{16}|hf_[A-Za-z0-9]{30,})" . 2>/dev/null; then
+            echo "FAIL: secret-like pattern found" && exit 1
+          fi
+          echo "No secret patterns found."
