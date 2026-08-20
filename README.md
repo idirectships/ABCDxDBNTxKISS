@@ -18,7 +18,9 @@ These aren't checklist steps run at the end. They're how the agent shows up in e
 
 ## Install
 
-Requires [Claude Code](https://claude.ai/code).
+Choose your harness:
+
+### Claude Code
 
 ```bash
 git clone https://github.com/idirectships/ABCDxDBNTxKISS
@@ -27,7 +29,33 @@ cp -r ABCDxDBNTxKISS/skills/abcd-dbnt-kiss ~/.claude/skills/
 
 Claude Code picks up the skill on the next session start. The first run asks up to 4 questions to fit your setup — or skip and use defaults.
 
-**Verify installation** — in a Claude Code session, type:
+### Codex
+
+See [`adapters/codex/AGENTS.md`](adapters/codex/AGENTS.md).
+
+```bash
+git clone https://github.com/idirectships/ABCDxDBNTxKISS
+cat ABCDxDBNTxKISS/METHOD.md >> your-project/AGENTS.md
+```
+
+### Cursor
+
+See [`adapters/cursor/rules.md`](adapters/cursor/rules.md).
+
+```bash
+git clone https://github.com/idirectships/ABCDxDBNTxKISS
+cat ABCDxDBNTxKISS/METHOD.md >> .cursorrules
+```
+
+### Any other harness
+
+See [`adapters/generic/HOWTO.md`](adapters/generic/HOWTO.md).
+
+Load `METHOD.md` into your harness's system prompt or instruction file. The method is plain markdown — it works anywhere an agent can read instructions.
+
+---
+
+**Verify** — ask your agent:
 
 ```
 did we live abcd

@@ -24,6 +24,14 @@ jobs:
           grep -q "^description:" skills/abcd-dbnt-kiss/SKILL.md && echo "description: OK" || (echo "MISSING description field" && exit 1)
           grep -q "^allowed-tools:" skills/abcd-dbnt-kiss/SKILL.md && echo "allowed-tools: OK" || (echo "MISSING allowed-tools field" && exit 1)
           echo "Frontmatter checks passed."
+      - name: Validate adapter files
+        run: |
+          echo "Checking adapter files..."
+          test -f METHOD.md && echo "METHOD.md: OK" || (echo "MISSING METHOD.md" && exit 1)
+          test -f adapters/codex/AGENTS.md && echo "adapters/codex/AGENTS.md: OK" || (echo "MISSING adapters/codex/AGENTS.md" && exit 1)
+          test -f adapters/cursor/rules.md && echo "adapters/cursor/rules.md: OK" || (echo "MISSING adapters/cursor/rules.md" && exit 1)
+          test -f adapters/generic/HOWTO.md && echo "adapters/generic/HOWTO.md: OK" || (echo "MISSING adapters/generic/HOWTO.md" && exit 1)
+          echo "All adapter checks passed."
       - name: No secrets sanity check
         run: |
           echo "Checking for obvious secret patterns..."
